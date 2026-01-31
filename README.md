@@ -21,12 +21,12 @@ This repository includes:
 - Small experiments with web pages and text
 - Practice code written during learning
 - Academic assignments as given by the instructor
-
-**Most code is intentionally kept **simple and readable**.
+- Most code is intentionally kept **simple and readable
 - Code is written as part of coursework and self-practice
 
 ## Status
 
 This repository will be **updated continuously** as the course progresses.
+
 
 
