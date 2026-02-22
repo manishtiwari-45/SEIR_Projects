@@ -1,32 +1,33 @@
-# Search Engine & Information Retrieval – Course Repository
+# SEIR Course Projects Repository
 
-This repository contains my **practice work, experiments, and mini-projects** done as part of the **Search Engine and Information Retrieval** course.
+## Introduction
 
-The purpose of this repository is **learning by doing** — implementing concepts taught in class, experimenting with ideas, and understanding how search engines work at a basic level.
+This repository contains multiple projects developed during the **Search Engine and Information Retrieval (SEIR)** course.
 
----
+The purpose of this repository is to apply theoretical concepts in a practical way using Python programming.
 
-## Objectives of This Repository
-
-- Practice concepts taught in lectures
-- Implement small programs to understand theory
-- Learn how real-world search systems work internally
-- Gain hands-on experience with web data and text processing
-- Maintain organized academic work for revision and evaluation
+Each project in this repository represents a different concept studied in the course.
 
 ---
 
-This repository includes:
-- Simple scripts written for understanding concepts
-- Small experiments with web pages and text
-- Practice code written during learning
-- Academic assignments as given by the instructor
-- Most code is intentionally kept **simple and readable
-- Code is written as part of coursework and self-practice
+## What This Repository Includes
 
-## Status
+The projects in this repository cover topics such as:
 
-This repository will be **updated continuously** as the course progresses.
+- Basic web crawling
+- Document processing
+- Text cleaning and word extraction
+- Frequency analysis
+- Hashing techniques
+- Document similarity detection
+- Core information retrieval methods
 
+All implementations are done step by step to clearly understand how these systems work.
 
+---
 
+## Academic Note
+
+This repository is created for coursework and learning purposes.
+
+The main goal is to build a strong foundation in Search Engine and Information Retrieval concepts through practical implementation.
