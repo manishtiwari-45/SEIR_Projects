@@ -14,7 +14,7 @@ def get_body_text(url):
         return soup.body.get_text()
     return ""
 
-# Extract words from text (Only alphanumeric words)
+# Extract words from text
 def extract_words(text):
     text = text.lower()
     words = re.findall(r"[a-z0-9]+", text)
@@ -31,7 +31,7 @@ def word_freq(words):
             word_dict[w] = 1
     return word_dict
 
-# Polynomial Rolling Hash (64-bit)
+# Polynomial Hash (64-bit)
 def word_hash(word):
     p = 53
     m = 2**64
@@ -47,7 +47,7 @@ def word_hash(word):
 
 # Compute SimHash fingerprint
 def simhash(word_dict):
-    arr = [0] * 64   # vector of 64 positions
+    arr = [0] * 64   # list of 64 positions
 
     for word, count in word_dict.items():
         hash_value = word_hash(word)
@@ -59,7 +59,7 @@ def simhash(word_dict):
             else:
                 arr[i] -= count
 
-    # Build final fingerprint from vector
+    # Final fingerprint from vector
     fingerprint = 0
     for i in range(64):
         if arr[i] >= 0:
@@ -68,7 +68,7 @@ def simhash(word_dict):
     return fingerprint
 
 
-# Count common bits between two hashes
+# Common bits between two hashes
 def common_bits(hash1, hash2):
     count = 0
 
@@ -77,10 +77,8 @@ def common_bits(hash1, hash2):
         b2 = (hash2 >> i) & 1
         if b1 == b2:
             count += 1
-
     return count
 
-# MAIN PROGRAM
 if len(sys.argv) < 3:
     print("No valid url givel")
     sys.exit(1)
@@ -112,7 +110,7 @@ hash2 = simhash(freq2)
 # Compare common bits
 same_bits = common_bits(hash1, hash2)
 
-# FINAL OUTPUT
+# OUTPUT
 print()
 print("SIMHASH RESULTS")
 
