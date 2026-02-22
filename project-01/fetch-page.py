@@ -2,12 +2,6 @@ import sys
 import requests
 from bs4 import BeautifulSoup
 
-""" The program takes a URL from the command line,
-sends an HTTP GET request using the requests library,
-parses the HTML using BeautifulSoup, extracts the title and
-body text using get_text(), and finds all anchor tags to print their
-href links."""
-
 if len(sys.argv) < 2:
     print("You did not provide a URL")
     sys.exit(1)
