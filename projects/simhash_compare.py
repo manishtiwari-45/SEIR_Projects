@@ -2,7 +2,7 @@ import sys
 import requests
 import re
 from bs4 import BeautifulSoup
-HEADERS = {"User-Agent": "Mozilla/5.0 (Educational crawler for SEIR course)"}
+HEADERS = {"User-Agent": "Mozilla/5.0 (Educational crawler)"}
 
 # Get body text from URL
 def get_body_text(url):
