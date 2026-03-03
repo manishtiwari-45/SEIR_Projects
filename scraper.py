@@ -1,51 +1,87 @@
 import sys
-import requests
+import time
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 
 
-if len(sys.argv) != 2:
-    print("Invalid URL givel, Try Again!")
+class WebScraper:
+
+    def __init__(self, address):
+
+        if not address.startswith("http"):
+            address = "https://" + address
+        self.base_url = address
+
+        print("Crawler initialized.")
+        print("Website to crawl:", self.base_url)
+
+        chrome_options = Options()
+        chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--blink-settings=imagesEnabled=false")
+        chrome_options.add_argument("--disable-extensions")
+        chrome_options.add_argument("--disable-gpu")
+
+        self.browser = webdriver.Chrome(options=chrome_options)
+
+    def load(self):
+        print("\nConnecting to website...")
+        self.browser.get(self.base_url)
+        time.sleep(0.5)
+        print("Website loaded.")
+
+    def get_soup(self):
+        print("\nExtracting HTML from page...")
+        page = self.browser.page_source
+        soup = BeautifulSoup(page, "html.parser")
+        print("HTML extraction complete.")
+        return soup
+
+    def show_title(self, soup):
+        print("\n--- TITLE ---")
+        title_tag = soup.find("title")
+        if title_tag:
+            print(title_tag.text.strip())
+        else:
+            print("Title not available")
+
+    def show_body(self, soup):
+        print("\n--- BODY CONTENT ---\n")
+        body_tag = soup.find("body")
+        if body_tag:
+            content = body_tag.get_text(separator=" ", strip=True)
+            print(content)
+
+    def show_outlinks(self, soup):
+
+        print("\n--- OUTGOING LINKS ---\n")
+        printed_links = set()
+        for element in soup.find_all("a"):
+            href = element.get("href")
+            if href is None:
+                continue
+
+            current = urljoin(self.base_url, href)
+            if current not in printed_links:
+                print(current)
+                printed_links.add(current)
+        print("\nTotal links discovered:", len(printed_links))
+
+    def start(self):
+
+        self.load()
+        soup = self.get_soup()
+        self.show_title(soup)
+        self.show_body(soup)
+        self.show_outlinks(soup)
+        print("\nScraping finished.")
+        self.browser.quit()
+
+
+if len(sys.argv) < 2:
+    print("Please provide a URL")
     sys.exit()
 
-url = sys.argv[1]
-
-if not url.startswith("http"):
-    url = "https://" + url
-
-headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
-
-try:
-    response = requests.get(url, headers=headers)
-except:
-    print("Failed to fetch webpage")
-    sys.exit()
-
-soup = BeautifulSoup(response.text, "html.parser")
-
-# Extract Title
-print("Title : ")
-if soup.title:
-    print(soup.title.get_text().strip())
-else:
-    print("No Title Found")
-print()
-
-# Extract Body Text
-print("Body Text: ")
-if soup.body:
-    body_text = soup.body.get_text(" ", strip=True)
-    print(body_text)
-print()
-
-# All links
-print("Links: ")
-links = soup.find_all("a")
-seen = set()
-for link in links:
-    href = link.get("href")
-    if href:
-        full_link = urljoin(url, href)
-        if full_link not in seen:
-            print(full_link)
-            seen.add(full_link)
+scraper = WebScraper(sys.argv[1])
+scraper.start()
